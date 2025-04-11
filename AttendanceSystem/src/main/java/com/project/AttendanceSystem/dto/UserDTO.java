@@ -4,6 +4,7 @@ import com.project.AttendanceSystem.entity.Role;
 
 public class UserDTO {
 
+    private Long uid;
     private String email;
     private String password;
     private Role role;
@@ -13,7 +14,8 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String email, String password, Role role, String name) {
+    public UserDTO(Long uid,String email, String password, Role role, String name) {
+        this.uid=uid;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -52,5 +54,13 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 }

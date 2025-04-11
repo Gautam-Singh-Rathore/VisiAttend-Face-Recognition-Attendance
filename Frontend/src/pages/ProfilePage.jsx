@@ -17,69 +17,19 @@ const ProfilePage = () => {
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Mark attendance api method
-//   const handleMarkAttendance = async (event) => {
-//     event.preventDefault(); // Prevent page reload
-
-//     if (!classId || !date || !selectedFile) {
-//       toast.error("Please enter Class ID, Date, and select an image.");
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append("class_id", classId); // Fix: Parameter name should match backend
-//     formData.append("image", selectedFile);
-//     formData.append("date", date);
-
-//     setLoading(true); // Start loading
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:5000/detect",
-//         formData,
-//         {
-//           headers: {
-//             "Content-Type": "multipart/form-data",
-//           },
-//         }
-//       );
-//       console.log(response.data);
-//       // Send the roll number to spring boot backend
-//       const request = {
-//         present:response.data.recognized_students,
-//           ClassId:classId,
-//           date:date
-//       }
-//       try {
-//         const ans = await axios.post("http://localhost:8080/api/attendance/mark" ,request);
-//         console.log(ans);
-//         if(ans.status==200){
-//             toast.success("Attendance Marked");
-//         }
-//       } catch (error) {
-//         console.log(error);
-//         toast.error("Failed...")
-        
-//       }
-//     } catch (error) {
-//       console.log(error);
-//       alert("Error processing attendance :", error);
-//     } finally {
-//       setLoading(false); // Stop loading
-//     }
-//   };
-const handleMarkAttendance = async (event) => {
+  const handleMarkAttendance = async (event) => {
     event.preventDefault();
-  
+
     if (!classId || !date || !selectedFile) {
       toast.error("Please enter Class ID, Date, and select an image.");
       return;
     }
-  
+
     const formData = new FormData();
-    formData.append("class_id", classId); 
+    formData.append("class_id", classId);
     formData.append("image", selectedFile);
     formData.append("date", date);
-  
+
     setLoading(true);
     try {
       const response = await axios.post(
@@ -87,18 +37,21 @@ const handleMarkAttendance = async (event) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-  
+
       console.log(response.data);
-  
+
       // Fixing the request object (use classId, not ClassId)
       const request = {
         present: response.data.recognized_students,
-        classId: classId, 
-        date: date
+        classId: classId,
+        date: date,
       };
-  
+
       try {
-        const ans = await axios.post("http://localhost:8080/api/attendance/mark", request);
+        const ans = await axios.post(
+          "http://localhost:8080/api/attendance/mark",
+          request
+        );
         console.log(ans);
         if (ans.status === 200) {
           toast.success("Attendance Marked");
@@ -114,7 +67,6 @@ const handleMarkAttendance = async (event) => {
       setLoading(false);
     }
   };
-  
 
   // Other functions
   const getAllClasses = async () => {
@@ -240,12 +192,6 @@ const handleMarkAttendance = async (event) => {
       )}
       {user?.role === "TEACHER" && (
         <div className="flex flex-col justify-center ">
-          {/* <button
-            className="mt-4 px-3 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300 cursor-pointer"
-            onClick={() => navigate("/mark-attendance")}
-          >
-            Mark Attendance
-          </button> */}
           <div className="flex gap-3">
             <input
               type="text"
@@ -261,26 +207,6 @@ const handleMarkAttendance = async (event) => {
               Create Class
             </button>
           </div>
-          {/* Mark Attendace div  */}
-          {/* <div>
-            <h2>Mark Attendance</h2>
-            <form onSubmit={handleMarkAttendance}>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-              <br />
-              <input
-                type="file"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
-              />
-              <br />
-              <button type="submit" disabled={loading}>
-                {loading ? "Loading..." : "Submit"}
-              </button>
-            </form>
-          </div> */}
           {/* Mark Attendance div */}
           <div className="mt-6  rounded-lg w-full max-w-md">
             <h2 className="text-lg font-bold text-center mb-3">
@@ -297,18 +223,18 @@ const handleMarkAttendance = async (event) => {
                 className="px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
               />
               <select
-              name=""
-              id=""
-              className="text-black mt-4 rounded-lg cursor-pointer outline-none border-black border-[1px]"
-              onChange={(e) => setClassId(Number(e.target.value))}
-            >
-              <option value="">--Sellect the class--</option>
-              {allClasses.map((cls) => (
-                <option key={cls.id} value={cls.id}>
-                  {cls.name} (Teacher: {cls.teacherName})
-                </option>
-              ))}
-            </select>
+                name=""
+                id=""
+                className="text-black mt-4 rounded-lg cursor-pointer outline-none border-black border-[1px]"
+                onChange={(e) => setClassId(Number(e.target.value))}
+              >
+                <option value="">--Sellect the class--</option>
+                {allClasses.map((cls) => (
+                  <option key={cls.id} value={cls.id}>
+                    {cls.name} (Teacher: {cls.teacherName})
+                  </option>
+                ))}
+              </select>
               <input
                 type="file"
                 onChange={(e) => setSelectedFile(e.target.files[0])}
@@ -326,6 +252,14 @@ const handleMarkAttendance = async (event) => {
                 {loading ? "Loading..." : "Submit"}
               </button>
             </form>
+          </div>
+          <div className="w-full">
+            <button
+              className='px-4 py-2 rounded-lg text-white transition duration-300 bg-blue-600 hover:bg-blue-700 w-full cursor-pointer mt-4'
+              onClick={()=> navigate("/view-attendance")}
+            >
+              View Attendance
+            </button>
           </div>
         </div>
       )}

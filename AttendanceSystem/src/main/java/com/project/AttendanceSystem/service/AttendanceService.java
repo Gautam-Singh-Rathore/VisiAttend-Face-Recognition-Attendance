@@ -124,5 +124,18 @@ public class AttendanceService {
         }
         return ans;
     }
+
+    public List<AttendanceRespose> getAttendanceByClassId(Long id){
+        Classes classes = classesRepo.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("No class found"));
+        List<Attendance> attendances = attendanceRepo.findByClasses(classes)
+                .orElseThrow(()-> new RuntimeException("No attendance found"));
+        List<AttendanceRespose> resposes = new ArrayList<>();
+        for (Attendance a:attendances){
+            resposes.add(new AttendanceRespose(a.getDate(), classes.getName(), classes.getTeacher().getName() , a.getStatus()));
+        }
+
+        return resposes;
+    }
 }
 

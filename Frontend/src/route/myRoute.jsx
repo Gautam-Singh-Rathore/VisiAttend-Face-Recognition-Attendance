@@ -9,6 +9,7 @@ import Signup from '../pages/Signup'
 import Login from '../pages/Login'
 import ProfilePage from '../pages/ProfilePage'
 import Attendance from '../pages/Attendance'
+import TeacherViewAttendance from '../pages/TeacherViewAttendance'
 
 export const myRoute = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ export const myRoute = createBrowserRouter([
                 path:"/attendance",
                 element:<Attendance/>
             },
+            {
+                path:"/view-attendance",
+                element:<TeacherViewAttendance/>
+            }
         ]
     }
 ]);

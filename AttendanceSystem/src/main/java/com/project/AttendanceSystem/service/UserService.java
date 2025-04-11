@@ -40,10 +40,10 @@ public class UserService {
 
         try {
             if(userDTO.getRole() == Role.STUDENT){
-                Student newStudent = new Student(savedUser , userDTO.getName());
+                Student newStudent = new Student(savedUser , userDTO.getName(), userDTO.getUid());
                 studentRepo.save(newStudent);
             }else if(userDTO.getRole() == Role.TEACHER){
-                Teacher newTeacher = new Teacher(savedUser , userDTO.getName());
+                Teacher newTeacher = new Teacher(savedUser , userDTO.getName(), userDTO.getUid());
                 teacherRepo.save(newTeacher);
             }else {
                 throw new IllegalArgumentException("Invalid role :"+userDTO.getRole());

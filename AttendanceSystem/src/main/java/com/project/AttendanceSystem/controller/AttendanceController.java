@@ -43,5 +43,15 @@ public class AttendanceController {
         }
     }
 
+    @GetMapping("/class/get/{classId}")
+    public ResponseEntity getAttendanceByClassId(@PathVariable(name = "classId") Long id){
+        try {
+            List<AttendanceRespose> data = attendanceService.getAttendanceByClassId(id);
+            return ResponseEntity.ok(data);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 
 }

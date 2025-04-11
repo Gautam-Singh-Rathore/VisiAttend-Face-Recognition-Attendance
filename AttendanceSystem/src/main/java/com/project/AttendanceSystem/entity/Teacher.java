@@ -9,7 +9,7 @@ import java.util.List;
 public class Teacher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
 
 
@@ -27,7 +27,8 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(Users user, String name) {
+    public Teacher(Users user, String name,Long employeeId) {
+        this.employeeId=employeeId;
         this.user = user;
         this.name = name;
     }
