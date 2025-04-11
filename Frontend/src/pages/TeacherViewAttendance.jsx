@@ -82,7 +82,7 @@ const TeacherViewAttendance = () => {
                 <th className="py-3 px-6 border-b text-left">Class Name</th>
                 <th className="py-3 px-6 border-b text-left">Date</th>
                 <th className="py-3 px-6 border-b text-left">Status</th>
-                <th className="py-3 px-6 border-b text-left">Teacher Name</th>
+                <th className="py-3 px-6 border-b text-left">Students name</th>
               </tr>
             </thead>
             <tbody>

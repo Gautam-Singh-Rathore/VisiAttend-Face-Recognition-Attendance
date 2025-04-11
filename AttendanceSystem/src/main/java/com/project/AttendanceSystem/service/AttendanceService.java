@@ -132,7 +132,7 @@ public class AttendanceService {
                 .orElseThrow(()-> new RuntimeException("No attendance found"));
         List<AttendanceRespose> resposes = new ArrayList<>();
         for (Attendance a:attendances){
-            resposes.add(new AttendanceRespose(a.getDate(), classes.getName(), classes.getTeacher().getName() , a.getStatus()));
+            resposes.add(new AttendanceRespose(a.getDate(), classes.getName(), a.getStudent().getName() , a.getStatus()));
         }
 
         return resposes;
