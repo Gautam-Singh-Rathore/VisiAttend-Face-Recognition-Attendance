@@ -5,6 +5,7 @@ import axios from "axios";
 const TeacherViewAttendance = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
+  const [date,setDate] = useState("");
   const [data, setData] = useState([]);
   const { user } = useContext(UserContext);
 
@@ -32,6 +33,9 @@ const TeacherViewAttendance = () => {
       if (res.status === 200) {
         setData(res.data);
       }
+      setData((prev)=>{
+        return prev.filter(info=> info.date = date);
+      })
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +67,12 @@ const TeacherViewAttendance = () => {
               </option>
             ))}
           </select>
+          <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+            />
 
           <button
             onClick={showAttendance}
